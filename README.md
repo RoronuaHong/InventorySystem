@@ -1,3 +1,3 @@
 # InventorySystems
 
-Initialize Inventory System
+Inventory System C++ version
