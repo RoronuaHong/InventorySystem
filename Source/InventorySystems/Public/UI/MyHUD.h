@@ -16,7 +16,7 @@ class INVENTORYSYSTEMS_API UMyHUD : public UUserWidget
 protected:
 	UMyHUD(const FObjectInitializer& ObjectInitializer);
 
-	UPROPERTY(Meta=(BindWidget))
+	UPROPERTY(EditInstanceOnly, BlueprintReadWrite, Meta=(BindWidget, ExposeOnSpawn=true))
 	UCanvasPanel* HUDCanvas;
 
 };

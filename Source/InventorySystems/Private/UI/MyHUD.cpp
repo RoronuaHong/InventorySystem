@@ -5,6 +5,5 @@
 #include "Components/CanvasPanel.h"
 
 UMyHUD::UMyHUD(const FObjectInitializer& ObjectInitializer) : Super(ObjectInitializer) {
-	/*HUDCanvas = CreateDefaultSubobject<UCanvasPanel>(TEXT("Canvas Panel"));*/
+	//HUDCanvas = CreateDefaultSubobject<UCanvasPanel>(TEXT("Canvas Panel"));
 }
-

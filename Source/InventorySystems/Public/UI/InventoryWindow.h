@@ -18,13 +18,13 @@ class INVENTORYSYSTEMS_API UInventoryWindow : public UUserWidget
 protected:
 	UInventoryWindow(const FObjectInitializer& ObjectInitializer);
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta=(BindWidget))
+	UPROPERTY(EditInstanceOnly, BlueprintReadWrite, Meta=(BindWidget, ExposeOnSpawn=true))
 	UButton* ButtonClose;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta=(BindWidget))
+	UPROPERTY(EditInstanceOnly, BlueprintReadWrite, Meta=(BindWidget, ExposeOnSpawn=true))
 	UGridPanel* InventoryGrid;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta=(BindWidget))
+	UPROPERTY(EditInstanceOnly, BlueprintReadWrite, Meta=(BindWidget, ExposeOnSpawn=true))
 	FText InventoryTitle;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)

@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "Blueprint/UserWidget.h"
+#include "Structure/SlotStructure.h"
 #include "InventorySlot.generated.h"
 
 UCLASS()
@@ -14,8 +15,9 @@ class INVENTORYSYSTEMS_API UInventorySlot : public UUserWidget
 protected:
 	UInventorySlot(const FObjectInitializer& ObjectInitializer);
 
-	UPROPERTY(Meta=(BindWidget))
+	UPROPERTY(EditInstanceOnly, BlueprintReadWrite, Meta=(BindWidget, ExposeOnSpawn=true))
 	int32 SlotIndex;
 
-
+	UPROPERTY(EditInstanceOnly, BlueprintReadWrite, Meta=(BindWidget, ExposeOnSpawn=true))
+	FSlotStructure SlotContents;
 };
