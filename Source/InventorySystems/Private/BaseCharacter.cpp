@@ -16,6 +16,8 @@ ABaseCharacter::ABaseCharacter()
  	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 
+	SlotNumber = 32;
+
 	CameraComp = CreateDefaultSubobject<UCameraComponent>(TEXT("CameraComp"));
 	SpringArmComp = CreateDefaultSubobject<USpringArmComponent>(TEXT("SpringArmComp"));
 
@@ -25,7 +27,7 @@ ABaseCharacter::ABaseCharacter()
 	SpringArmComp->bUsePawnControlRotation = true;
 	SpringArmComp->SetupAttachment(RootComponent);
 
-	InventoryComp->SetNumberOfSlots(32);
+	InventoryComp->SetNumberOfSlots(SlotNumber);
 	InventoryComp->SetInventoryName(FText::FromString("Backpacks"));
 
 	TArray<FSlotStructure> InvenArray;
@@ -33,9 +35,9 @@ ABaseCharacter::ABaseCharacter()
 	FItemStructure ItemStructure;
 
 	// TODO: 结构体初始化和赋值问题.
-	//FSlotStructure SlotStructure(ItemStructure, 0);
+	FSlotStructure SlotStructure(ItemStructure, 0);
 
-	//InvenArray.Init(SlotStructure, 5);
+	InvenArray.Init(SlotStructure, SlotNumber);
 
 	InventoryComp->SetInventoryArray(InvenArray);
 

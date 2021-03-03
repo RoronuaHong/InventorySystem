@@ -24,7 +24,6 @@ void UInventoryWindow::NativeConstruct() {
 		if(InventoryComp) {
 			int32 Num = InventoryComp->GetNumberOfSlots();
 
-			// empty.
 			TArray<FSlotStructure> InvenArray = InventoryComp->GetInventoryArray();
 
 			for(int i = 0; i < Num; i++) {
@@ -35,9 +34,7 @@ void UInventoryWindow::NativeConstruct() {
 					// 设置SoltIndex
 					// 设置SlotContents
 					InventorySlotHUD->SetSlotIndex(i);
-
-					// TODO: error.
-					//InventorySlotHUD->SetSlotContents(InvenArray[i]);
+					InventorySlotHUD->SetSlotContents(InvenArray[i]);
 					InventorySlotHUD->SetInventoryComp(InventoryComp);
 
 					InventoryGrid->AddChildToGrid(InventorySlotHUD, i / 8, i % 8);

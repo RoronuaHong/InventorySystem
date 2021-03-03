@@ -39,7 +39,8 @@ struct FItemStructure
 
 };
 
-FORCEINLINE FItemStructure::FItemStructure() {
+FORCEINLINE FItemStructure::FItemStructure(): Name(FText::FromString("None")), bStackable(false), Thumbnail(nullptr), MaxStackSize(4),
+bComsumable(false), Durability(0), Description(FText::FromString("None")) {
 	
 }
 

@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+﻿// Fill out your copyright notice in the Description page of Project Settings.
 
 #pragma once
 
@@ -20,14 +20,11 @@ struct FSlotStructure {
 	int32 Quantity;
 };
 
+// TODO: 序列化
 FORCEINLINE FSlotStructure::FSlotStructure() {
 
 }
 
-//FORCEINLINE FSlotStructure::FSlotStructure(FItemStructure ItemStructure, int32 Quantity) {
-//
-//}
-
-FORCEINLINE FSlotStructure::FSlotStructure(FItemStructure ItemStructure, int32 Quantity): ItemStructure(ItemStructure), Quantity(0) {
+FORCEINLINE FSlotStructure::FSlotStructure(FItemStructure ItemStructure, int32 Quantity) {
 
 }
