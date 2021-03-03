@@ -36,9 +36,17 @@ protected:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Meta = (ExposeOnSpawn = true))
 	UInventoryWindow* InventoryWindowHUD;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Inventory")
+	bool bInventoryVisible;
+
 public:
 	// Called every frame
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
+
+	UFUNCTION()
+	void SetInventoryName(FText Name);
+
+	FText GetInventoryName();
 
 	UFUNCTION()
 	int32 GetNumberOfSlots() {
@@ -59,5 +67,4 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void ToggleInventory();
 
-	bool bInventoryVisible;
 };

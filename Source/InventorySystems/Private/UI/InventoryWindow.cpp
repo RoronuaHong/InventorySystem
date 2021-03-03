@@ -5,34 +5,46 @@
 #include "UI/InventorySlot.h"
 #include "Components/TextBlock.h"
 #include "Components/GridPanel.h"
+#include "BaseCharacter.h"
+#include "Kismet/GameplayStatics.h"
 #include "Components/InventoryComponent.h"
 
 UInventoryWindow::UInventoryWindow(const FObjectInitializer& ObjectInitializer) : Super(ObjectInitializer) {
-	InventoryComp = CreateDefaultSubobject<UInventoryComponent>(TEXT("InventoryComp"));
+	//InventoryComp = CreateDefaultSubobject<UInventoryComponent>(TEXT("InventoryComp"));
 }
 
 void UInventoryWindow::NativeConstruct() {
 	Super::NativeConstruct();
 
-	UE_LOG(LogTemp, Log, TEXT("%s"), *GetNameSafe(InventoryComp));
+	ABaseCharacter* MyCharacter = Cast<ABaseCharacter>(UGameplayStatics::GetPlayerCharacter(this, 0));
 
-	// TODO: InventoryComp is nullptr.
-	//if(InventoryComp) {
+	if(MyCharacter) {
+		InventoryComp = MyCharacter->InventoryComp;
 
-	//	int32 Num = InventoryComp->GetNumberOfSlots();
-	//	TArray<FSlotStructure> InvenArray = InventoryComp->GetInventoryArray();
+		if(InventoryComp) {
+			int32 Num = InventoryComp->GetNumberOfSlots();
+	
+			UE_LOG(LogTemp, Log, TEXT("%i"), Num);
 
-	//	for(int i = 0; i < Num - 1; i++) {
-	//		InventorySlotHUD = CreateWidget<UInventorySlot>(GetWorld(), LoadClass<UInventorySlot>(this, 
-	//			TEXT("WidgetBlueprint'/Game/UI/WBP_InventorySlot.WBP_InventorySlot_C'")));
+			// empty.
+			TArray<FSlotStructure> InvenArray = InventoryComp->GetInventoryArray();
 
-	//		// 设置SoltIndex
-	//		// 设置SlotContents
-	//		InventorySlotHUD->SetSlotIndex(i);
-	//		InventorySlotHUD->SetSlotContents(InvenArray[i]);
-	//		InventorySlotHUD->SetInventoryComp(InventoryComp);
+			for(int i = 0; i < Num; i++) {
+				InventorySlotHUD = CreateWidget<UInventorySlot>(GetWorld(), LoadClass<UInventorySlot>(this,
+					TEXT("WidgetBlueprint'/Game/UI/WBP_InventorySlot.WBP_InventorySlot_C'")));
 
-	//		InventoryGrid->AddChildToGrid(InventorySlotHUD, i % Num, i / Num);
-	//	}
-	//}
+				if(InventorySlotHUD) {
+					// 设置SoltIndex
+					// 设置SlotContents
+					InventorySlotHUD->SetSlotIndex(i);
+
+					// TODO: error.
+					//InventorySlotHUD->SetSlotContents(InvenArray[i]);
+					InventorySlotHUD->SetInventoryComp(InventoryComp);
+
+					InventoryGrid->AddChildToGrid(InventorySlotHUD, i / 8, i % 8);
+				}
+			}
+		}
+	}
 }

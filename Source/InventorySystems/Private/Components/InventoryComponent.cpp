@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+﻿// Fill out your copyright notice in the Description page of Project Settings.
 
 
 #include "Components/InventoryComponent.h"
@@ -15,9 +15,10 @@ UInventoryComponent::UInventoryComponent() {
 	// off to improve performance if you don't need them.
 	PrimaryComponentTick.bCanEverTick = true;
 
-	NumberOfSlots = 8;
-}
+	NumberOfSlots = 16;
+	InventoryName = FText::FromString("Backpack");
 
+}
 
 // Called when the game starts
 void UInventoryComponent::BeginPlay() {
@@ -30,8 +31,16 @@ void UInventoryComponent::TickComponent(float DeltaTime, ELevelTick TickType, FA
 
 }
 
+void UInventoryComponent::SetInventoryName(FText Name) {
+	InventoryName = Name;
+}
+
+FText UInventoryComponent::GetInventoryName() {
+	return InventoryName;
+}
+
 void UInventoryComponent::SetNumberOfSlots(int32 NumbOfSlots) {
-	NumbOfSlots = NumbOfSlots;
+	NumberOfSlots = NumbOfSlots;
 }
 
 void UInventoryComponent::SetInventoryArray(TArray<FSlotStructure> Array) {

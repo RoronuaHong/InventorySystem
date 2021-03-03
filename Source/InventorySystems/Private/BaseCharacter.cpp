@@ -21,7 +21,8 @@ ABaseCharacter::ABaseCharacter()
 	SpringArmComp->bUsePawnControlRotation = true;
 	SpringArmComp->SetupAttachment(RootComponent);
 
-	//InventoryComp->SetActive(true);
+	InventoryComp->SetNumberOfSlots(32);
+	InventoryComp->SetInventoryName(FText::FromString("Backpacks"));
 
 	CameraComp->SetupAttachment(SpringArmComp);
 }
