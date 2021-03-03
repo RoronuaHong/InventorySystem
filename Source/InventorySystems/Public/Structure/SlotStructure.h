@@ -24,6 +24,10 @@ FORCEINLINE FSlotStructure::FSlotStructure() {
 
 }
 
-FORCEINLINE FSlotStructure::FSlotStructure(FItemStructure ItemStructure, int32 Quantity) {
+//FORCEINLINE FSlotStructure::FSlotStructure(FItemStructure ItemStructure, int32 Quantity) {
+//
+//}
+
+FORCEINLINE FSlotStructure::FSlotStructure(FItemStructure ItemStructure, int32 Quantity): ItemStructure(ItemStructure), Quantity(0) {
 
 }

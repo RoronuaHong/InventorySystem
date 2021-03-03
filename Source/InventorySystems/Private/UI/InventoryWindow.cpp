@@ -10,7 +10,7 @@
 #include "Components/InventoryComponent.h"
 
 UInventoryWindow::UInventoryWindow(const FObjectInitializer& ObjectInitializer) : Super(ObjectInitializer) {
-	//InventoryComp = CreateDefaultSubobject<UInventoryComponent>(TEXT("InventoryComp"));
+	
 }
 
 void UInventoryWindow::NativeConstruct() {
@@ -23,8 +23,6 @@ void UInventoryWindow::NativeConstruct() {
 
 		if(InventoryComp) {
 			int32 Num = InventoryComp->GetNumberOfSlots();
-	
-			UE_LOG(LogTemp, Log, TEXT("%i"), Num);
 
 			// empty.
 			TArray<FSlotStructure> InvenArray = InventoryComp->GetInventoryArray();
@@ -47,4 +45,8 @@ void UInventoryWindow::NativeConstruct() {
 			}
 		}
 	}
+}
+
+void UInventoryWindow::SetInventoryTitle(FText Title) {
+	InventoryTitle->SetText(Title);
 }

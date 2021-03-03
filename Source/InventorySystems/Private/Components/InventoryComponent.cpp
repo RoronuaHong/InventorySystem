@@ -18,6 +18,7 @@ UInventoryComponent::UInventoryComponent() {
 	NumberOfSlots = 16;
 	InventoryName = FText::FromString("Backpack");
 
+	position = FVector2D(500.0f, 0.0f);
 }
 
 // Called when the game starts
@@ -48,13 +49,13 @@ void UInventoryComponent::SetInventoryArray(TArray<FSlotStructure> Array) {
 }
 
 void UInventoryComponent::ToggleInventory() {
-	if(!bInventoryVisible) {
-		bInventoryVisible = true;
-
+	if(!InventoryWindowHUD) {
 		InventoryWindowHUD = CreateWidget<UInventoryWindow>(GetWorld(), LoadClass<UInventoryWindow>(this,
 			TEXT("WidgetBlueprint'/Game/UI/WBP_InventoryWindows.WBP_InventoryWindows_C'")));
 
 		AMyPlayerController* MyPlayerController = Cast<AMyPlayerController>(UGameplayStatics::GetPlayerController(this, 0));
+
+		InventoryWindowHUD->SetInventoryTitle(FText::FromString("Inventory"));
 
 		if(MyPlayerController) {
 			UMyHUD* CurrentHUD = MyPlayerController->GetWidgetHUD();
@@ -66,8 +67,14 @@ void UInventoryComponent::ToggleInventory() {
 					UCanvasPanelSlot* CurrentPanelSlot = CurrentPanel->AddChildToCanvas(InventoryWindowHUD);
 
 					CurrentPanelSlot->SetAutoSize(true);
+					CurrentPanelSlot->SetAlignment(FVector2D(0.5, 0.5));
+					CurrentPanelSlot->SetAnchors(FAnchors(0.5, 0.5, 0.5, 0.5));
+					CurrentPanelSlot->SetPosition(position);
 				}
 			}
 		}
+	} else {
+		InventoryWindowHUD->RemoveFromParent();
+		InventoryWindowHUD = nullptr;
 	}
 }

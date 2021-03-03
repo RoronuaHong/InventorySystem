@@ -48,3 +48,13 @@ FORCEINLINE FItemStructure::FItemStructure(FText Name, bool bStackable, UTexture
 	bComsumable(false), Durability(0), Description(FText::FromString("None")) {
 
 }
+
+//{
+//	FText::FromString("None"),
+//		false,
+//		nullptr,
+//		4,
+//		false,
+//		0,
+//		FText::FromString("None")
+//}

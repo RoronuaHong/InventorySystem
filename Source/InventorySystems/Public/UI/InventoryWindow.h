@@ -28,7 +28,7 @@ protected:
 	UPROPERTY(EditInstanceOnly, BlueprintReadOnly, Meta=(BindWidget, ExposeOnSpawn=true))
 	UGridPanel* InventoryGrid;
 
-	UPROPERTY(EditInstanceOnly, BlueprintReadOnly, Meta=(BindWidget, ExposeOnSpawn=true))
+	UPROPERTY(Meta=(BindWidget))
 	UTextBlock* InventoryTitle;
 
 	UPROPERTY(EditInstanceOnly, BlueprintReadOnly, Meta=(ExposeOnSpawn = true))
@@ -36,5 +36,8 @@ protected:
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Meta=(ExposeOnSpawn = true))
 	UInventorySlot* InventorySlotHUD;
+
+public:
+	void SetInventoryTitle(FText Title);
 
 };

@@ -37,7 +37,7 @@ protected:
 	UInventoryWindow* InventoryWindowHUD;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Inventory")
-	bool bInventoryVisible;
+	FVector2D position;
 
 public:
 	// Called every frame

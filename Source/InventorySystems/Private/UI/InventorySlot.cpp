@@ -5,7 +5,7 @@
 #include "Components/InventoryComponent.h"
 
 UInventorySlot::UInventorySlot(const FObjectInitializer& ObjectInitializer): Super(ObjectInitializer) {
-	InventoryComp = CreateDefaultSubobject<UInventoryComponent>(TEXT("InventoryComp"));
+	
 }
 
 void UInventorySlot::NativeConstruct() {

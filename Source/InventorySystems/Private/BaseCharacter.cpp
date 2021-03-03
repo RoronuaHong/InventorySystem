@@ -7,6 +7,8 @@
 #include "GameFramework/SpringArmComponent.h"
 #include "Components/InventoryComponent.h"
 #include "Item.h"
+#include "Structure/ItemStructure.h"
+#include "Structure/SlotStructure.h"
 
 // Sets default values
 ABaseCharacter::ABaseCharacter()
@@ -16,6 +18,8 @@ ABaseCharacter::ABaseCharacter()
 
 	CameraComp = CreateDefaultSubobject<UCameraComponent>(TEXT("CameraComp"));
 	SpringArmComp = CreateDefaultSubobject<USpringArmComponent>(TEXT("SpringArmComp"));
+
+	// FIXME: 修改代码时需要重新配置并重启引擎.
 	InventoryComp = CreateDefaultSubobject<UInventoryComponent>(TEXT("InventoryComp"));
 
 	SpringArmComp->bUsePawnControlRotation = true;
@@ -23,6 +27,17 @@ ABaseCharacter::ABaseCharacter()
 
 	InventoryComp->SetNumberOfSlots(32);
 	InventoryComp->SetInventoryName(FText::FromString("Backpacks"));
+
+	TArray<FSlotStructure> InvenArray;
+
+	FItemStructure ItemStructure;
+
+	// TODO: 结构体初始化和赋值问题.
+	//FSlotStructure SlotStructure(ItemStructure, 0);
+
+	//InvenArray.Init(SlotStructure, 5);
+
+	InventoryComp->SetInventoryArray(InvenArray);
 
 	CameraComp->SetupAttachment(SpringArmComp);
 }
