@@ -3,16 +3,17 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "Structure/SlotStructure.h"
 #include "Components/ActorComponent.h"
 #include "InventoryComponent.generated.h"
 
+class UInventoryWindow;
 
-UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
-class INVENTORYSYSTEMS_API UInventoryComponent : public UActorComponent
-{
+UCLASS(ClassGroup = (Custom), meta = (BlueprintSpawnableComponent))
+class INVENTORYSYSTEMS_API UInventoryComponent: public UActorComponent {
 	GENERATED_BODY()
 
-public:	
+public:
 	// Sets default values for this component's properties
 	UInventoryComponent();
 
@@ -20,21 +21,43 @@ protected:
 	// Called when the game starts
 	virtual void BeginPlay() override;
 
-	UPROPERTY(EditDefaultsOnly, Category = "Inventory")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Inventory")
 	FText InventoryName;
 
-	UPROPERTY(EditDefaultsOnly, Category = "Inventory")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Inventory")
 	int32 NumberOfSlots;
 
-	//UPROPERTY(EditDefaultsOnly, Category = "Inventory")
-	//FText Inventory;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Inventory")
+	TArray<FSlotStructure> InventoryArray;
 
-	UPROPERTY(EditDefaultsOnly, Category = "Inventory")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Inventory")
 	UObject* InventoryWindow;
 
-public:	
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Meta = (ExposeOnSpawn = true))
+	UInventoryWindow* InventoryWindowHUD;
+
+public:
 	// Called every frame
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
-		
+	UFUNCTION()
+	int32 GetNumberOfSlots() {
+		return NumberOfSlots;
+	}
+
+	UFUNCTION()
+	void SetNumberOfSlots(int32 NumbOfSlots);
+
+	UFUNCTION()
+	TArray<FSlotStructure> GetInventoryArray() {
+		return InventoryArray;
+	}
+
+	UFUNCTION()
+	void SetInventoryArray(TArray<FSlotStructure> Array);
+
+	UFUNCTION(BlueprintCallable)
+	void ToggleInventory();
+
+	bool bInventoryVisible;
 };

@@ -9,6 +9,7 @@
 
 class UCameraComponent;
 class USpringArmComponent;
+class UInventoryComponent;
 
 UCLASS()
 class INVENTORYSYSTEMS_API ABaseCharacter : public ACharacter, public IInterfaces
@@ -26,6 +27,7 @@ protected:
 	void MoveForward(float Value);
 	void MoveRight(float Value);
 	void OnInteract();
+	void OnInventory();
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
 	UCameraComponent* CameraComp;
@@ -33,11 +35,13 @@ protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
 	USpringArmComponent* SpringArmComp;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Components")
+	UInventoryComponent* InventoryComp;
+
 public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
-
 };

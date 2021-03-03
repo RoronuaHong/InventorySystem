@@ -7,7 +7,9 @@
 #include "InventoryWindow.generated.h"
 
 class UButton;
+class UTextBlock;
 class UGridPanel;
+class UInventorySlot;
 class UInventoryComponent;
 
 UCLASS()
@@ -18,15 +20,21 @@ class INVENTORYSYSTEMS_API UInventoryWindow : public UUserWidget
 protected:
 	UInventoryWindow(const FObjectInitializer& ObjectInitializer);
 
-	UPROPERTY(EditInstanceOnly, BlueprintReadWrite, Meta=(BindWidget, ExposeOnSpawn=true))
+	void NativeConstruct() override;
+
+	UPROPERTY(EditInstanceOnly, BlueprintReadOnly, Meta=(BindWidget, ExposeOnSpawn=true))
 	UButton* ButtonClose;
 
-	UPROPERTY(EditInstanceOnly, BlueprintReadWrite, Meta=(BindWidget, ExposeOnSpawn=true))
+	UPROPERTY(EditInstanceOnly, BlueprintReadOnly, Meta=(BindWidget, ExposeOnSpawn=true))
 	UGridPanel* InventoryGrid;
 
-	UPROPERTY(EditInstanceOnly, BlueprintReadWrite, Meta=(BindWidget, ExposeOnSpawn=true))
-	FText InventoryTitle;
+	UPROPERTY(EditInstanceOnly, BlueprintReadOnly, Meta=(BindWidget, ExposeOnSpawn=true))
+	UTextBlock* InventoryTitle;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	UPROPERTY(EditInstanceOnly, BlueprintReadOnly, Meta=(ExposeOnSpawn = true))
 	UInventoryComponent* InventoryComp;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Meta=(ExposeOnSpawn = true))
+	UInventorySlot* InventorySlotHUD;
+
 };

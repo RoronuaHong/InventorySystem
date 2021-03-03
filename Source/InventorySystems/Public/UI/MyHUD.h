@@ -16,7 +16,11 @@ class INVENTORYSYSTEMS_API UMyHUD : public UUserWidget
 protected:
 	UMyHUD(const FObjectInitializer& ObjectInitializer);
 
+	void NativeConstruct() override;
+
 	UPROPERTY(EditInstanceOnly, BlueprintReadWrite, Meta=(BindWidget, ExposeOnSpawn=true))
 	UCanvasPanel* HUDCanvas;
 
+public:
+	UCanvasPanel* GetHUDCanvas();
 };

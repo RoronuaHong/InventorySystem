@@ -7,3 +7,11 @@
 UMyHUD::UMyHUD(const FObjectInitializer& ObjectInitializer) : Super(ObjectInitializer) {
 	//HUDCanvas = CreateDefaultSubobject<UCanvasPanel>(TEXT("Canvas Panel"));
 }
+
+void UMyHUD::NativeConstruct() {
+	Super::NativeConstruct();
+}
+
+UCanvasPanel* UMyHUD::GetHUDCanvas() {
+	return HUDCanvas;
+}

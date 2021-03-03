@@ -22,4 +22,8 @@ protected:
 
 	UMyHUD* WidgetHUD;
 
+public:
+	UFUNCTION()
+	UMyHUD* GetWidgetHUD();
+
 };

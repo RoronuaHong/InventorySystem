@@ -18,3 +18,7 @@ void AMyPlayerController::BeginPlay() {
 		WidgetHUD->AddToViewport();
 	}
 }
+
+UMyHUD* AMyPlayerController::GetWidgetHUD() {
+	return WidgetHUD;
+}

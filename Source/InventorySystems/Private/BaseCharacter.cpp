@@ -1,10 +1,11 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+﻿// Fill out your copyright notice in the Description page of Project Settings.
 
 
 #include "BaseCharacter.h"
 #include "Camera/CameraComponent.h"
 #include "Kismet/GameplayStatics.h"
 #include "GameFramework/SpringArmComponent.h"
+#include "Components/InventoryComponent.h"
 #include "Item.h"
 
 // Sets default values
@@ -15,11 +16,14 @@ ABaseCharacter::ABaseCharacter()
 
 	CameraComp = CreateDefaultSubobject<UCameraComponent>(TEXT("CameraComp"));
 	SpringArmComp = CreateDefaultSubobject<USpringArmComponent>(TEXT("SpringArmComp"));
+	InventoryComp = CreateDefaultSubobject<UInventoryComponent>(TEXT("InventoryComp"));
 
 	SpringArmComp->bUsePawnControlRotation = true;
 	SpringArmComp->SetupAttachment(RootComponent);
-	CameraComp->SetupAttachment(SpringArmComp);
 
+	//InventoryComp->SetActive(true);
+
+	CameraComp->SetupAttachment(SpringArmComp);
 }
 
 void ABaseCharacter::MoveForward(float Value) {
@@ -54,13 +58,22 @@ void ABaseCharacter::OnInteract() {
 	}
 }
 
+void ABaseCharacter::OnInventory() {
+	UE_LOG(LogTemp, Log, TEXT("Inventory: %s"), *GetNameSafe(InventoryComp));
+
+	if(InventoryComp) {
+		InventoryComp->ToggleInventory();
+	}
+}
+
 // Called when the game starts or when spawned
 void ABaseCharacter::BeginPlay()
 {
 	Super::BeginPlay();
-	
+
 	void MoveForward(float Value);
 	void MoveRight(float Value);
+
 }
 
 // Called every frame
@@ -82,4 +95,5 @@ void ABaseCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCompo
 	PlayerInputComponent->BindAxis("Turn", this, &ABaseCharacter::AddControllerYawInput);
 
 	PlayerInputComponent->BindAction("Interact", IE_Pressed, this, &ABaseCharacter::OnInteract);
+	PlayerInputComponent->BindAction("Inventory", IE_Pressed, this, &ABaseCharacter::OnInventory);
 }
