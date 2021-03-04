@@ -8,14 +8,28 @@
 #include "BaseCharacter.h"
 #include "Kismet/GameplayStatics.h"
 #include "Components/InventoryComponent.h"
+#include "Components/Button.h"
+#include "Input/Reply.h"
 
 UInventoryWindow::UInventoryWindow(const FObjectInitializer& ObjectInitializer) : Super(ObjectInitializer) {
 	
 }
 
+void UInventoryWindow::NativeTick(const FGeometry& MyGeometry, float DeltaTime) {
+	// FIXME: 待优化
+	APlayerController* MyPlayerController = Cast<APlayerController>(UGameplayStatics::GetPlayerController(this, 0));
+
+	if(!HasUserFocus(MyPlayerController)) {
+		SetUserFocus(MyPlayerController);
+	}
+}
+
 void UInventoryWindow::NativeConstruct() {
 	Super::NativeConstruct();
 
+	ButtonClose->OnClicked.AddUniqueDynamic(this, &UInventoryWindow::OnToggleClicked);
+	
+	// FIXME: 待优化
 	ABaseCharacter* MyCharacter = Cast<ABaseCharacter>(UGameplayStatics::GetPlayerCharacter(this, 0));
 
 	if(MyCharacter) {
@@ -40,6 +54,33 @@ void UInventoryWindow::NativeConstruct() {
 					InventoryGrid->AddChildToGrid(InventorySlotHUD, i / 8, i % 8);
 				}
 			}
+		}
+	}
+}
+
+FReply UInventoryWindow::NativeOnKeyDown(const FGeometry& InGeometry, const FKeyEvent& InKeyEvent) {
+	if(InKeyEvent.GetKey() == EKeys::Tab) {
+		HandleToggleInventory();
+
+		return FReply::Handled();
+	}
+
+	return FReply::Handled();
+}
+
+void UInventoryWindow::OnToggleClicked() {
+	HandleToggleInventory();
+}
+
+void UInventoryWindow::HandleToggleInventory() {
+	// FIXME: 待优化
+	ABaseCharacter* MyCharacter = Cast<ABaseCharacter>(UGameplayStatics::GetPlayerCharacter(this, 0));
+
+	if(MyCharacter) {
+		InventoryComp = MyCharacter->InventoryComp;
+
+		if(InventoryComp) {
+			InventoryComp->ToggleInventory();
 		}
 	}
 }
