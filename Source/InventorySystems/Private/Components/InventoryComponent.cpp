@@ -8,6 +8,7 @@
 #include "UI/MyHUD.h"
 #include "Components/CanvasPanel.h"
 #include "Components/CanvasPanelSlot.h"
+#include "Blueprint/WidgetBlueprintLibrary.h"
 
 // Sets default values for this component's properties
 UInventoryComponent::UInventoryComponent() {
@@ -49,11 +50,11 @@ void UInventoryComponent::SetInventoryArray(TArray<FSlotStructure> Array) {
 }
 
 void UInventoryComponent::ToggleInventory() {
+	AMyPlayerController* MyPlayerController = Cast<AMyPlayerController>(UGameplayStatics::GetPlayerController(this, 0));
+
 	if(!InventoryWindowHUD) {
 		InventoryWindowHUD = CreateWidget<UInventoryWindow>(GetWorld(), LoadClass<UInventoryWindow>(this,
 			TEXT("WidgetBlueprint'/Game/UI/WBP_InventoryWindows.WBP_InventoryWindows_C'")));
-
-		AMyPlayerController* MyPlayerController = Cast<AMyPlayerController>(UGameplayStatics::GetPlayerController(this, 0));
 
 		InventoryWindowHUD->SetInventoryTitle(FText::FromString("Inventory"));
 
@@ -70,11 +71,15 @@ void UInventoryComponent::ToggleInventory() {
 					CurrentPanelSlot->SetAlignment(FVector2D(0.5, 0.5));
 					CurrentPanelSlot->SetAnchors(FAnchors(0.5, 0.5, 0.5, 0.5));
 					CurrentPanelSlot->SetPosition(position);
+
+					UWidgetBlueprintLibrary::SetInputMode_UIOnly(MyPlayerController, InventoryWindowHUD, true);
 				}
 			}
 		}
 	} else {
 		InventoryWindowHUD->RemoveFromParent();
 		InventoryWindowHUD = nullptr;
+
+		UWidgetBlueprintLibrary::SetInputMode_GameOnly(MyPlayerController);
 	}
 }
