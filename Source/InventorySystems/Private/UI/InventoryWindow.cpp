@@ -28,7 +28,7 @@ void UInventoryWindow::NativeConstruct() {
 	Super::NativeConstruct();
 
 	ButtonClose->OnReleased.AddUniqueDynamic(this, &UInventoryWindow::OnToggleClicked);
-	
+
 	// FIXME: 待优化
 	ABaseCharacter* MyCharacter = Cast<ABaseCharacter>(UGameplayStatics::GetPlayerCharacter(this, 0));
 

@@ -20,7 +20,9 @@ UInventoryComponent::UInventoryComponent() {
 	// off to improve performance if you don't need them.
 	PrimaryComponentTick.bCanEverTick = true;
 
+	Index = -1;
 	NumberOfSlots = 16;
+	
 	InventoryName = FText::FromString("Backpack");
 
 	position = FVector2D(500.0f, 0.0f);
@@ -115,13 +117,13 @@ bool UInventoryComponent::AddToInventory(FSlotStructure SlotCont) {
 
 // TODO: 需要修改
 bool UInventoryComponent::CreateStack(FSlotStructure SlotCont) {
-	static int32 Index = -1;
-
 	if(Index < InvenNum && Index >= 0) {
 		InventoryArray[Index] = SlotCont;
 	}
 	
 	if(Index >= InvenNum) {
+		Index = -1;
+
 		UE_LOG(LogTemp, Log, TEXT("exceed!"));
 
 		return false;
