@@ -23,5 +23,5 @@ class INVENTORYSYSTEMS_API IInterfaces
 	// Add interface functions to this class. This is the class that will be inherited to implement this interface.
 public:
 	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable, Category="Interact")
-	void Interact();
+	void Interact(AActor* Interactor);
 };

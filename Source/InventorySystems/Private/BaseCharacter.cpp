@@ -16,7 +16,7 @@ ABaseCharacter::ABaseCharacter()
  	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 
-	SlotNumber = 32;
+	SlotNumber = 5;
 
 	CameraComp = CreateDefaultSubobject<UCameraComponent>(TEXT("CameraComp"));
 	SpringArmComp = CreateDefaultSubobject<USpringArmComponent>(TEXT("SpringArmComp"));
@@ -28,7 +28,7 @@ ABaseCharacter::ABaseCharacter()
 	SpringArmComp->SetupAttachment(RootComponent);
 
 	InventoryComp->SetNumberOfSlots(SlotNumber);
-	InventoryComp->SetInventoryName(FText::FromString("Backpacks"));
+	InventoryComp->SetInventoryName(FText::FromString("MyInventory"));
 
 	TArray<FSlotStructure> InvenArray;
 
@@ -67,7 +67,7 @@ void ABaseCharacter::OnInteract() {
 
 			if(MyItem) {
 				if(ImplementsInterface) {
-					MyItem->Interact();
+					MyItem->Interact(this);
 
 					break;
 				}
@@ -91,14 +91,12 @@ void ABaseCharacter::BeginPlay()
 
 	void MoveForward(float Value);
 	void MoveRight(float Value);
-
 }
 
 // Called every frame
 void ABaseCharacter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-
 }
 
 // Called to bind functionality to input

@@ -1,8 +1,13 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+﻿// Fill out your copyright notice in the Description page of Project Settings.
 
 
 #include "Item.h"
 #include "Components/SphereComponent.h"
+#include "Components/InventoryComponent.h"
+
+#include "BaseCharacter.h"
+#include "Kismet/GameplayStatics.h"
+#include "Components/InventoryComponent.h"
 
 // Sets default values
 AItem::AItem()
@@ -31,6 +36,10 @@ void AItem::Tick(float DeltaTime)
 
 }
 
-void AItem::Interact() {
-	Destroy();
+void AItem::Interact(AActor* Interactor) {
+	auto InvenComp = static_cast<UInventoryComponent*>((Interactor->GetComponentByClass(UInventoryComponent::StaticClass())));
+
+	if(InvenComp->AddToInventory(SlotStruct)) {
+		Destroy();
+	}
 }

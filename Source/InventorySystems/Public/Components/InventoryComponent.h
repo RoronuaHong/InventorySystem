@@ -39,6 +39,11 @@ protected:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Inventory")
 	FVector2D position;
 
+	UPROPERTY(EditInstanceOnly, BlueprintReadOnly, Meta = (ExposeOnSpawn = true))
+	UInventoryComponent* InventoryComp;
+
+	int32 InvenNum;
+
 public:
 	// Called every frame
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
@@ -67,4 +72,11 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void ToggleInventory();
 
+	UFUNCTION(BlueprintCallable)
+	bool AddToInventory(FSlotStructure SlotCont);
+
+	UFUNCTION(BlueprintCallable)
+	void PrepareInventory();
+
+	bool CreateStack(FSlotStructure SlotCont);
 };

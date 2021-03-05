@@ -7,6 +7,8 @@
 #include "Structure/SlotStructure.h"
 #include "InventorySlot.generated.h"
 
+class UImage;
+class UTextBlock;
 class UInventoryComponent;
 
 UCLASS()
@@ -28,6 +30,12 @@ protected:
 	UPROPERTY(EditInstanceOnly, BlueprintReadOnly, Meta = (ExposeOnSpawn = true))
 	UInventoryComponent* InventoryComp;
 
+	UPROPERTY(Meta=(BindWidget))
+	UImage* ItemThumbnail;
+
+	UPROPERTY(Meta=(BindWidget))
+	UTextBlock* ItemQuantity;
+
 public:
 	UFUNCTION()
 	void SetSlotIndex(int32 Index);
@@ -45,4 +53,7 @@ public:
 	void SetInventoryComp(UInventoryComponent* InvenComp);
 
 	UInventoryComponent* GetInventoryComp();
+
+	UFUNCTION()
+	void SetItemQuantity(UTextBlock* Quantity);
 };

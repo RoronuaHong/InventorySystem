@@ -27,7 +27,7 @@ void UInventoryWindow::NativeTick(const FGeometry& MyGeometry, float DeltaTime) 
 void UInventoryWindow::NativeConstruct() {
 	Super::NativeConstruct();
 
-	ButtonClose->OnClicked.AddUniqueDynamic(this, &UInventoryWindow::OnToggleClicked);
+	ButtonClose->OnReleased.AddUniqueDynamic(this, &UInventoryWindow::OnToggleClicked);
 	
 	// FIXME: 待优化
 	ABaseCharacter* MyCharacter = Cast<ABaseCharacter>(UGameplayStatics::GetPlayerCharacter(this, 0));

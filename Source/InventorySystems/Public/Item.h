@@ -5,9 +5,12 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
 #include "Interfaces.h"
+#include "Structure/SlotStructure.h"
+#include "Structure/ItemStructure.h"
 #include "Item.generated.h"
 
 class USphereComponent;
+class UInventoryComponent;
 
 UCLASS()
 class INVENTORYSYSTEMS_API AItem : public AActor, public IInterfaces
@@ -28,9 +31,18 @@ protected:
 	UPROPERTY(VisibleDefaultsOnly, Category="Component")
 	UStaticMeshComponent* MeshComp;
 
+	UPROPERTY(EditInstanceOnly, BlueprintReadOnly, Meta=(ExposeOnSpawn = true))
+	UInventoryComponent* InventoryComp;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Default")
+	FSlotStructure SlotStruct;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Default")
+	FItemStructure ItemStruct;
+
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
-	virtual void Interact();
+	virtual void Interact(AActor* Interactor);
 };

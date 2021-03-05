@@ -10,6 +10,10 @@
 #include "Components/CanvasPanelSlot.h"
 #include "Blueprint/WidgetBlueprintLibrary.h"
 
+#include "BaseCharacter.h"
+#include "Kismet/KismetArrayLibrary.h"
+#include "Components/InventoryComponent.h"
+
 // Sets default values for this component's properties
 UInventoryComponent::UInventoryComponent() {
 	// Set this component to be initialized when the game starts, and to be ticked every frame.  You can turn these features
@@ -25,6 +29,22 @@ UInventoryComponent::UInventoryComponent() {
 // Called when the game starts
 void UInventoryComponent::BeginPlay() {
 	Super::BeginPlay();
+
+	// FIXME: 待优化
+	ABaseCharacter* MyCharacter = Cast<ABaseCharacter>(UGameplayStatics::GetPlayerCharacter(this, 0));
+
+	if(MyCharacter) {
+		InventoryComp = MyCharacter->InventoryComp;
+
+		InvenNum = InventoryComp->GetNumberOfSlots();
+		InventoryArray = InventoryComp->GetInventoryArray();
+	}
+
+	PrepareInventory();
+
+	FSlotStructure SlotCont;
+
+	CreateStack(SlotCont);
 }
 
 // Called every frame
@@ -56,7 +76,8 @@ void UInventoryComponent::ToggleInventory() {
 		InventoryWindowHUD = CreateWidget<UInventoryWindow>(GetWorld(), LoadClass<UInventoryWindow>(this,
 			TEXT("WidgetBlueprint'/Game/UI/WBP_InventoryWindows.WBP_InventoryWindows_C'")));
 
-		InventoryWindowHUD->SetInventoryTitle(FText::FromString("Inventory"));
+		InventoryWindowHUD->bIsFocusable = true;
+		InventoryWindowHUD->SetInventoryTitle(FText::FromString("MyInventory"));
 
 		if(MyPlayerController) {
 			UMyHUD* CurrentHUD = MyPlayerController->GetWidgetHUD();
@@ -82,4 +103,36 @@ void UInventoryComponent::ToggleInventory() {
 
 		UWidgetBlueprintLibrary::SetInputMode_GameOnly(MyPlayerController);
 	}
+}
+
+bool UInventoryComponent::AddToInventory(FSlotStructure SlotCont) {
+	if(!SlotCont.ItemStructure.bStackable) {
+		return CreateStack(SlotCont);
+	}
+
+	return true;
+}
+
+// TODO: 需要修改
+bool UInventoryComponent::CreateStack(FSlotStructure SlotCont) {
+	static int32 Index = -1;
+
+	if(Index < InvenNum && Index >= 0) {
+		InventoryArray[Index] = SlotCont;
+	}
+	
+	if(Index >= InvenNum) {
+		UE_LOG(LogTemp, Log, TEXT("exceed!"));
+
+		return false;
+	}
+
+	Index++;
+
+	return true;
+}
+
+// TODO: Resize
+void UInventoryComponent::PrepareInventory() {
+	InventoryArray.SetNum(InvenNum);
 }
