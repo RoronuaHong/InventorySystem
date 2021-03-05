@@ -11,7 +11,7 @@ AItem_Herb::AItem_Herb() {
 
 	MeshComp->SetStaticMesh(MeshCompObj.Object);
 
-	// TODO: 初始化失败.
+	// TODO: 添加默认Class.
 	ItemStruct = FItemStructure(
 		FText::FromString("GreenHerb"),
 		false,
