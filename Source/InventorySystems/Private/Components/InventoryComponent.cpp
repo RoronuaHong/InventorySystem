@@ -121,10 +121,10 @@ bool UInventoryComponent::CreateStack(FSlotStructure SlotCont) {
 		InventoryArray[Index] = SlotCont;
 	}
 	
-	if(Index >= InvenNum) {
-		Index = -1;
+	if(Index >= InvenNum || Index < -1) {
+		Index = -2;
 
-		UE_LOG(LogTemp, Log, TEXT("exceed!"));
+		UE_LOG(LogTemp, Log, TEXT("exceed!!!!"));
 
 		return false;
 	}
