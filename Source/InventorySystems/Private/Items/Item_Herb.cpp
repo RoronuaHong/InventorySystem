@@ -19,9 +19,10 @@ AItem_Herb::AItem_Herb() {
 		8,
 		true,
 		0,
-		FText::FromString("None")
-		//this->StaticClass()
+		FText::FromString("None"),
+		AItem_Herb::StaticClass()
 	);
 
 	SlotStruct = FSlotStructure(ItemStruct, 1);
 }
+
