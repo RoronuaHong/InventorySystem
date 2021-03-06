@@ -21,6 +21,8 @@ AItem::AItem()
 	RootComponent = MeshComp;
 
 	SphereComp->SetupAttachment(MeshComp);
+
+	SlotStruct = FSlotStructure(ItemStruct, 1);
 }
 
 // Called when the game starts or when spawned

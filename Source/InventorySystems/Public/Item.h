@@ -25,20 +25,21 @@ protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
-	UPROPERTY(VisibleDefaultsOnly, Category="Component")
+	UPROPERTY(Instanced, VisibleDefaultsOnly, Category="Component")
 	USphereComponent* SphereComp;
 
-	UPROPERTY(VisibleDefaultsOnly, Category="Component")
+	UPROPERTY(Instanced, VisibleDefaultsOnly, Category="Component")
 	UStaticMeshComponent* MeshComp;
 
-	UPROPERTY(EditInstanceOnly, BlueprintReadOnly, Meta=(ExposeOnSpawn = true))
+	UPROPERTY(Instanced, EditInstanceOnly, BlueprintReadOnly, Meta=(ExposeOnSpawn = true))
 	UInventoryComponent* InventoryComp;
+
+	//UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Default")
+	UPROPERTY()
+	FItemStructure ItemStruct;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Default")
 	FSlotStructure SlotStruct;
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Default")
-	FItemStructure ItemStruct;
 
 public:	
 	// Called every frame
