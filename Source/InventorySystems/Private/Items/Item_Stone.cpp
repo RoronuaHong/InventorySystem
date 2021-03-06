@@ -23,5 +23,5 @@ AItem_Stone::AItem_Stone() {
 		AItem_Stone::StaticClass()
 	);
 
-	SlotStruct = FSlotStructure(ItemStruct, 1);
+	SlotStruct = FSlotStructure(ItemStruct, 3);
 }

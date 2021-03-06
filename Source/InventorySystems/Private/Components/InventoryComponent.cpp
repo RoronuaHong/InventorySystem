@@ -129,8 +129,25 @@ bool UInventoryComponent::AddToInventory(FSlotStructure SlotCont) {
 
 // TODO: 需要修改
 bool UInventoryComponent::CreateStack(FSlotStructure SlotCont) {
+	FSlotStructure CurrentSlotStruct = SlotCont;
+	int32 TotalQuanlity = SlotCont.Quantity;
+
 	if(Index < InvenNum && Index >= 0) {
 		InventoryArray[Index] = SlotCont;
+
+		if(TotalQuanlity > SlotCont.ItemStructure.MaxStackSize) {
+			InventoryArray[Index].Quantity = SlotCont.ItemStructure.MaxStackSize;
+
+			int32 LeftQuanlity = TotalQuanlity - InventoryArray[Index].ItemStructure.MaxStackSize;
+
+			CurrentSlotStruct.Quantity = LeftQuanlity;
+
+			if(LeftQuanlity > 0) {
+				Index++;
+
+				return CreateStack(CurrentSlotStruct);
+			}
+		}
 	}
 	
 	if(Index >= InvenNum || Index < -1) {
@@ -147,10 +164,19 @@ bool UInventoryComponent::CreateStack(FSlotStructure SlotCont) {
 }
 
 bool UInventoryComponent::AddToStack(FSlotStructure SlotStruct, int32 SlotIndex) {
-	InventoryArray[SlotIndex].Quantity = InventoryArray[SlotIndex].Quantity + SlotStruct.Quantity;
+	int32 TotalQuanlity = InventoryArray[SlotIndex].Quantity + SlotStruct.Quantity;
+	FSlotStructure CurrentSlotStruct = SlotStruct;
 
-	if(InventoryArray[SlotIndex].Quantity >= InventoryArray[SlotIndex].ItemStructure.MaxStackSize) {
+	if(TotalQuanlity >= InventoryArray[SlotIndex].ItemStructure.MaxStackSize) {
 		InventoryArray[SlotIndex].Quantity = InventoryArray[SlotIndex].ItemStructure.MaxStackSize;
+
+		int32 LeftQuanlity = TotalQuanlity - InventoryArray[SlotIndex].ItemStructure.MaxStackSize;
+
+		CurrentSlotStruct.Quantity = LeftQuanlity;
+
+		if(LeftQuanlity > 0) {
+			return CreateStack(CurrentSlotStruct);
+		}
 
 		return false;
 	}

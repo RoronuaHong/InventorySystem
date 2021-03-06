@@ -23,6 +23,6 @@ AItem_Herb::AItem_Herb() {
 		AItem_Herb::StaticClass()
 	);
 
-	SlotStruct = FSlotStructure(ItemStruct, 1);
+	SlotStruct = FSlotStructure(ItemStruct, 3);
 }
 
