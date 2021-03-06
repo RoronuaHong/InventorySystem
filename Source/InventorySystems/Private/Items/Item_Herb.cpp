@@ -14,9 +14,9 @@ AItem_Herb::AItem_Herb() {
 	// TODO: 添加默认Class.
 	ItemStruct = FItemStructure(
 		FText::FromString("GreenHerb"),
-		false,
+		true,
 		Thumbnail,
-		8,
+		4,
 		true,
 		0,
 		FText::FromString("None"),

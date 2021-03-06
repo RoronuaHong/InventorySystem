@@ -69,7 +69,7 @@ public:
 	}
 
 	UFUNCTION()
-	void SetInventoryArray(TArray<FSlotStructure> Array);
+	void SetInventoryArray(const TArray<FSlotStructure>& Array);
 
 	UFUNCTION(BlueprintCallable)
 	void ToggleInventory();
@@ -81,4 +81,5 @@ public:
 	void PrepareInventory();
 
 	bool CreateStack(FSlotStructure SlotCont);
+	bool AddToStack(FSlotStructure SlotStruct, int32 SlotIndex);
 };

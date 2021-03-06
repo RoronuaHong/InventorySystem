@@ -10,6 +10,7 @@ class UButton;
 class UTextBlock;
 class UGridPanel;
 class UInventorySlot;
+class ABaseCharacter;
 class UInventoryComponent;
 
 UCLASS()
@@ -34,6 +35,8 @@ protected:
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Meta=(ExposeOnSpawn = true))
 	UInventorySlot* InventorySlotHUD;
+
+	ABaseCharacter* MyCharacter;
 
 	void NativeConstruct() override;
 

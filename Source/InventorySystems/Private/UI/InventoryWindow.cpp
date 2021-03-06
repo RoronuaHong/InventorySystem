@@ -12,11 +12,10 @@
 #include "Input/Reply.h"
 
 UInventoryWindow::UInventoryWindow(const FObjectInitializer& ObjectInitializer) : Super(ObjectInitializer) {
-	
+	MyCharacter = Cast<ABaseCharacter>(UGameplayStatics::GetPlayerCharacter(this, 0));
 }
 
 void UInventoryWindow::NativeTick(const FGeometry& MyGeometry, float DeltaTime) {
-	// FIXME: 待优化
 	APlayerController* MyPlayerController = Cast<APlayerController>(UGameplayStatics::GetPlayerController(this, 0));
 
 	if(!HasUserFocus(MyPlayerController)) {
@@ -29,8 +28,8 @@ void UInventoryWindow::NativeConstruct() {
 
 	ButtonClose->OnReleased.AddUniqueDynamic(this, &UInventoryWindow::OnToggleClicked);
 
-	// FIXME: 待优化
-	ABaseCharacter* MyCharacter = Cast<ABaseCharacter>(UGameplayStatics::GetPlayerCharacter(this, 0));
+	//// FIXME: 待优化
+	//ABaseCharacter* MyCharacter = Cast<ABaseCharacter>(UGameplayStatics::GetPlayerCharacter(this, 0));
 
 	if(MyCharacter) {
 		InventoryComp = MyCharacter->InventoryComp;
@@ -73,8 +72,8 @@ void UInventoryWindow::OnToggleClicked() {
 }
 
 void UInventoryWindow::HandleToggleInventory() {
-	// FIXME: 待优化
-	ABaseCharacter* MyCharacter = Cast<ABaseCharacter>(UGameplayStatics::GetPlayerCharacter(this, 0));
+	//// FIXME: 待优化
+	//ABaseCharacter* MyCharacter = Cast<ABaseCharacter>(UGameplayStatics::GetPlayerCharacter(this, 0));
 
 	if(MyCharacter) {
 		InventoryComp = MyCharacter->InventoryComp;

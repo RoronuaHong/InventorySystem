@@ -14,9 +14,9 @@ AItem_Stone::AItem_Stone() {
 	// TODO: 添加默认Class.
 	ItemStruct = FItemStructure(
 		FText::FromString("Stone"),
-		false,
+		true,
 		Thumbnail,
-		8,
+		4,
 		true,
 		0,
 		FText::FromString("None"),

@@ -13,6 +13,7 @@
 #include "BaseCharacter.h"
 #include "Kismet/KismetArrayLibrary.h"
 #include "Components/InventoryComponent.h"
+#include "Macros/HasPartialStack.h"
 
 // Sets default values for this component's properties
 UInventoryComponent::UInventoryComponent() {
@@ -67,7 +68,7 @@ void UInventoryComponent::SetNumberOfSlots(int32 NumbOfSlots) {
 	NumberOfSlots = NumbOfSlots;
 }
 
-void UInventoryComponent::SetInventoryArray(TArray<FSlotStructure> Array) {
+void UInventoryComponent::SetInventoryArray(const TArray<FSlotStructure>& Array) {
 	InventoryArray = Array;
 }
 
@@ -110,6 +111,17 @@ void UInventoryComponent::ToggleInventory() {
 bool UInventoryComponent::AddToInventory(FSlotStructure SlotCont) {
 	if(!SlotCont.ItemStructure.bStackable) {
 		return CreateStack(SlotCont);
+	} else {
+		result CurrentStack = HasPartialStack(SlotCont, InventoryArray);
+
+		bool CurrentBoolean = CurrentStack.CurrentBoolean;
+		int CurrentIndex = CurrentStack.CurrentIndex;
+
+		if(CurrentBoolean) {
+			return AddToStack(SlotCont, CurrentIndex);
+		} else {
+			return CreateStack(SlotCont);
+		}
 	}
 
 	return true;
@@ -130,6 +142,18 @@ bool UInventoryComponent::CreateStack(FSlotStructure SlotCont) {
 	}
 
 	Index++;
+
+	return true;
+}
+
+bool UInventoryComponent::AddToStack(FSlotStructure SlotStruct, int32 SlotIndex) {
+	InventoryArray[SlotIndex].Quantity = InventoryArray[SlotIndex].Quantity + SlotStruct.Quantity;
+
+	if(InventoryArray[SlotIndex].Quantity >= InventoryArray[SlotIndex].ItemStructure.MaxStackSize) {
+		InventoryArray[SlotIndex].Quantity = InventoryArray[SlotIndex].ItemStructure.MaxStackSize;
+
+		return false;
+	}
 
 	return true;
 }

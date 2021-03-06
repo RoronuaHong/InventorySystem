@@ -15,17 +15,6 @@ UInventorySlot::UInventorySlot(const FObjectInitializer& ObjectInitializer): Sup
 void UInventorySlot::NativeConstruct() {
 	Super::NativeConstruct();
 
-	//ABaseCharacter* MyCharacter = Cast<ABaseCharacter>(UGameplayStatics::GetPlayerCharacter(this, 0));
-
-	//if(MyCharacter) {
-	//	InventoryComp = MyCharacter->InventoryComp;
-
-	//	if(InventoryComp) {
-	//		TArray<FSlotStructure> InvenArray = InventoryComp->GetInventoryArray();
-
-	//	}
-	//}
-
 	ItemThumbnail->SetBrushFromTexture(SlotContents.ItemStructure.Thumbnail);
 
 	ItemQuantity->SetText(FText::AsNumber(SlotContents.Quantity));
