@@ -58,19 +58,13 @@ void ABaseCharacter::OnInteract() {
 	if(MyCharacter) {
 		TArray<AActor*> OverlappingItems;
 
-		bool ImplementsInterface = MyCharacter->GetClass()->ImplementsInterface(UInterfaces::StaticClass());
-
 		MyCharacter->GetOverlappingActors(OverlappingItems);
 
 		for(AActor* Items : OverlappingItems) {
-			AItem* MyItem = Cast<AItem>(Items);
+			if(Items->GetClass()->ImplementsInterface(UInterfaces::StaticClass())) {
+				IInterfaces::Execute_OnInteracts(Items, this);
 
-			if(MyItem) {
-				if(ImplementsInterface) {
-					MyItem->Interact(this);
-
-					break;
-				}
+				break;
 			}
 		}
 	}

@@ -45,5 +45,6 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
-	virtual void Interact(AActor* Interactor);
+	virtual void OnInteracts(AActor* Interactor);
+	virtual void OnInteracts_Implementation(AActor* Interactor);
 };

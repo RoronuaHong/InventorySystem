@@ -28,30 +28,24 @@ void UInventoryWindow::NativeConstruct() {
 
 	ButtonClose->OnReleased.AddUniqueDynamic(this, &UInventoryWindow::OnToggleClicked);
 
-	//// FIXME: 待优化
-	//ABaseCharacter* MyCharacter = Cast<ABaseCharacter>(UGameplayStatics::GetPlayerCharacter(this, 0));
+	if(InventoryComp) {
+		UE_LOG(LogTemp, Log, TEXT("555: %i"), InventoryComp->GetNumberOfSlots());
+		int32 Num = InventoryComp->GetNumberOfSlots();
 
-	if(MyCharacter) {
-		InventoryComp = MyCharacter->InventoryComp;
+		TArray<FSlotStructure> InvenArray = InventoryComp->GetInventoryArray();
 
-		if(InventoryComp) {
-			int32 Num = InventoryComp->GetNumberOfSlots();
+		for(int i = 0; i < Num; i++) {
+			InventorySlotHUD = CreateWidget<UInventorySlot>(GetWorld(), LoadClass<UInventorySlot>(this,
+				TEXT("WidgetBlueprint'/Game/UI/WBP_InventorySlot.WBP_InventorySlot_C'")));
 
-			TArray<FSlotStructure> InvenArray = InventoryComp->GetInventoryArray();
+			if(InventorySlotHUD) {
+				// 设置SoltIndex
+				// 设置SlotContents
+				InventorySlotHUD->SetSlotIndex(i);
+				InventorySlotHUD->SetSlotContents(InvenArray[i]);
+				InventorySlotHUD->SetInventoryComp(InventoryComp);
 
-			for(int i = 0; i < Num; i++) {
-				InventorySlotHUD = CreateWidget<UInventorySlot>(GetWorld(), LoadClass<UInventorySlot>(this,
-					TEXT("WidgetBlueprint'/Game/UI/WBP_InventorySlot.WBP_InventorySlot_C'")));
-
-				if(InventorySlotHUD) {
-					// 设置SoltIndex
-					// 设置SlotContents
-					InventorySlotHUD->SetSlotIndex(i);
-					InventorySlotHUD->SetSlotContents(InvenArray[i]);
-					InventorySlotHUD->SetInventoryComp(InventoryComp);
-
-					InventoryGrid->AddChildToGrid(InventorySlotHUD, i / 8, i % 8);
-				}
+				InventoryGrid->AddChildToGrid(InventorySlotHUD, i / 8, i % 8);
 			}
 		}
 	}
@@ -72,18 +66,15 @@ void UInventoryWindow::OnToggleClicked() {
 }
 
 void UInventoryWindow::HandleToggleInventory() {
-	//// FIXME: 待优化
-	//ABaseCharacter* MyCharacter = Cast<ABaseCharacter>(UGameplayStatics::GetPlayerCharacter(this, 0));
-
-	if(MyCharacter) {
-		InventoryComp = MyCharacter->InventoryComp;
-
-		if(InventoryComp) {
-			InventoryComp->ToggleInventory();
-		}
+	if(InventoryComp) {
+		InventoryComp->ToggleInventory();
 	}
 }
 
 void UInventoryWindow::SetInventoryTitle(FText Title) {
 	InventoryTitle->SetText(Title);
+}
+
+void UInventoryWindow::SetInventoryComp(UInventoryComponent* InvenComp) {
+	InventoryComp = InvenComp;
 }

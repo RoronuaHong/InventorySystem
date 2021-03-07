@@ -54,4 +54,6 @@ public:
 
 	void SetInventoryTitle(FText Title);
 
+	void SetInventoryComp(UInventoryComponent* InvenComp);
+
 };

@@ -38,7 +38,15 @@ void AItem::Tick(float DeltaTime)
 
 }
 
-void AItem::Interact(AActor* Interactor) {
+void AItem::OnInteracts(AActor* Interactor) {
+	auto InvenComp = static_cast<UInventoryComponent*>((Interactor->GetComponentByClass(UInventoryComponent::StaticClass())));
+
+	if(InvenComp->AddToInventory(SlotStruct)) {
+		Destroy();
+	}
+}
+
+void AItem::OnInteracts_Implementation(AActor* Interactor) {
 	auto InvenComp = static_cast<UInventoryComponent*>((Interactor->GetComponentByClass(UInventoryComponent::StaticClass())));
 
 	if(InvenComp->AddToInventory(SlotStruct)) {

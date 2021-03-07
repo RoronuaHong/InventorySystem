@@ -22,9 +22,6 @@ UInventoryComponent::UInventoryComponent() {
 	PrimaryComponentTick.bCanEverTick = true;
 
 	Index = -1;
-	NumberOfSlots = 16;
-	
-	InventoryName = FText::FromString("Backpack");
 
 	position = FVector2D(500.0f, 0.0f);
 }
@@ -33,12 +30,10 @@ UInventoryComponent::UInventoryComponent() {
 void UInventoryComponent::BeginPlay() {
 	Super::BeginPlay();
 
-	// FIXME: 待优化
-	ABaseCharacter* MyCharacter = Cast<ABaseCharacter>(UGameplayStatics::GetPlayerCharacter(this, 0));
+	AActor * MyOwner = GetOwner();
 
-	if(MyCharacter) {
-		InventoryComp = MyCharacter->InventoryComp;
-
+	if(MyOwner) {
+		InventoryComp = MyOwner->FindComponentByClass<UInventoryComponent>();
 		InvenNum = InventoryComp->GetNumberOfSlots();
 		InventoryArray = InventoryComp->GetInventoryArray();
 	}
@@ -73,14 +68,19 @@ void UInventoryComponent::SetInventoryArray(const TArray<FSlotStructure>& Array)
 }
 
 void UInventoryComponent::ToggleInventory() {
+	UE_LOG(LogTemp, Log, TEXT("888: %s"), *(InventoryComp->GetInventoryName()).ToString());
+
+	// FIXME: 打开方式不对
 	AMyPlayerController* MyPlayerController = Cast<AMyPlayerController>(UGameplayStatics::GetPlayerController(this, 0));
 
 	if(!InventoryWindowHUD) {
 		InventoryWindowHUD = CreateWidget<UInventoryWindow>(GetWorld(), LoadClass<UInventoryWindow>(this,
 			TEXT("WidgetBlueprint'/Game/UI/WBP_InventoryWindows.WBP_InventoryWindows_C'")));
 
+		InventoryWindowHUD->SetInventoryComp(InventoryComp);
+
 		InventoryWindowHUD->bIsFocusable = true;
-		InventoryWindowHUD->SetInventoryTitle(FText::FromString("MyInventory"));
+		InventoryWindowHUD->SetInventoryTitle(InventoryComp->GetInventoryName());
 
 		if(MyPlayerController) {
 			UMyHUD* CurrentHUD = MyPlayerController->GetWidgetHUD();
@@ -92,9 +92,12 @@ void UInventoryComponent::ToggleInventory() {
 					UCanvasPanelSlot* CurrentPanelSlot = CurrentPanel->AddChildToCanvas(InventoryWindowHUD);
 
 					CurrentPanelSlot->SetAutoSize(true);
+					CurrentPanelSlot->SetPosition(position);
+
+					UE_LOG(LogTemp, Log, TEXT("11111"));
+
 					CurrentPanelSlot->SetAlignment(FVector2D(0.5, 0.5));
 					CurrentPanelSlot->SetAnchors(FAnchors(0.5, 0.5, 0.5, 0.5));
-					CurrentPanelSlot->SetPosition(position);
 
 					UWidgetBlueprintLibrary::SetInputMode_UIOnly(MyPlayerController, InventoryWindowHUD, true);
 				}

@@ -7,7 +7,7 @@
 #include "Interfaces.generated.h"
 
 // This class does not need to be modified.
-UINTERFACE(MinimalAPI)
+UINTERFACE(BlueprintType)
 class UInterfaces : public UInterface
 {
 	GENERATED_BODY()
@@ -22,6 +22,6 @@ class INVENTORYSYSTEMS_API IInterfaces
 
 	// Add interface functions to this class. This is the class that will be inherited to implement this interface.
 public:
-	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable, Category="Interact")
-	void Interact(AActor* Interactor);
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category="Interact")
+	void OnInteracts(AActor* Interactor);
 };
