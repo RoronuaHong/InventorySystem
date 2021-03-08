@@ -8,15 +8,14 @@ class AActor;
 class UTexture2D;
 
 USTRUCT(BlueprintType)
-struct FItemStructure
-{
+struct FItemStructure {
 	GENERATED_USTRUCT_BODY();
 
 	uint32 UniqueID;
 
 	FORCEINLINE FItemStructure();
 
-	explicit FORCEINLINE FItemStructure(FText Name, bool bStackable, UTexture2D* Thumbnail, 
+	explicit FORCEINLINE FItemStructure(FText Name, bool bStackable, UTexture2D* Thumbnail,
 		const int32 MaxStackSize, bool bComsumable, float Durability, FText Description, TSubclassOf<AActor> ItemClass);
 
 	FItemStructure(const FItemStructure& Struct)//复制构造函数
@@ -29,32 +28,32 @@ struct FItemStructure
 	}
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	FText Name;
+		FText Name;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-    bool bStackable;
+		bool bStackable;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	UTexture2D* Thumbnail;
+		UTexture2D* Thumbnail;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	int32 MaxStackSize;
+		int32 MaxStackSize;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	bool bComsumable;
+		bool bComsumable;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	float Durability;
+		float Durability;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	FText Description;
+		FText Description;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	TSubclassOf<AActor> ItemClass;
+		TSubclassOf<AActor> ItemClass;
 };
 
 FORCEINLINE FItemStructure::FItemStructure(): Name(FText::FromString("None")), bStackable(false), Thumbnail(nullptr), MaxStackSize(4),
-bComsumable(false), Durability(0), Description(FText::FromString("None")), ItemClass(AActor::StaticClass()) {
+bComsumable(false), Durability(0), Description(FText::FromString("None")), ItemClass(nullptr) {
 	static uint32 ID = 0;
 
 	UniqueID = ID++;
@@ -70,8 +69,8 @@ bComsumable(false), Durability(0), Description(FText::FromString("None")), ItemC
 }
 
 FORCEINLINE FItemStructure::FItemStructure(FText Name, bool bStackable, UTexture2D* Thumbnail,
-	const int32 MaxStackSize, bool bComsumable, float Durability, FText Description, TSubclassOf<AActor> ItemClass) : Name(FText::FromString("None")), bStackable(false), Thumbnail(nullptr), MaxStackSize(4), 
-	bComsumable(false), Durability(0), Description(FText::FromString("None")), ItemClass(AActor::StaticClass()) {
+	const int32 MaxStackSize, bool bComsumable, float Durability, FText Description, TSubclassOf<AActor> ItemClass): Name(FText::FromString("None")), bStackable(false), Thumbnail(nullptr), MaxStackSize(4),
+	bComsumable(false), Durability(0), Description(FText::FromString("None")), ItemClass(nullptr) {
 	static uint32 ID = 0;
 
 	UniqueID = ID++;

@@ -14,6 +14,9 @@
 #include "Kismet/KismetArrayLibrary.h"
 #include "Components/InventoryComponent.h"
 #include "Macros/HasPartialStack.h"
+#include "UObject/Class.h"
+#include "Item.h"
+#include "Items/Item_Herb.h"
 
 // Sets default values for this component's properties
 UInventoryComponent::UInventoryComponent() {
@@ -74,6 +77,8 @@ void UInventoryComponent::ToggleInventory() {
 	AMyPlayerController* MyPlayerController = Cast<AMyPlayerController>(UGameplayStatics::GetPlayerController(this, 0));
 
 	if(!InventoryWindowHUD) {
+		PrepareInventory();
+
 		InventoryWindowHUD = CreateWidget<UInventoryWindow>(GetWorld(), LoadClass<UInventoryWindow>(this,
 			TEXT("WidgetBlueprint'/Game/UI/WBP_InventoryWindows.WBP_InventoryWindows_C'")));
 
@@ -93,8 +98,6 @@ void UInventoryComponent::ToggleInventory() {
 
 					CurrentPanelSlot->SetAutoSize(true);
 					CurrentPanelSlot->SetPosition(position);
-
-					UE_LOG(LogTemp, Log, TEXT("11111"));
 
 					CurrentPanelSlot->SetAlignment(FVector2D(0.5, 0.5));
 					CurrentPanelSlot->SetAnchors(FAnchors(0.5, 0.5, 0.5, 0.5));
@@ -180,8 +183,6 @@ bool UInventoryComponent::AddToStack(FSlotStructure SlotStruct, int32 SlotIndex)
 		if(LeftQuanlity > 0) {
 			return CreateStack(CurrentSlotStruct);
 		}
-
-		return false;
 	}
 
 	return true;
@@ -190,4 +191,17 @@ bool UInventoryComponent::AddToStack(FSlotStructure SlotStruct, int32 SlotIndex)
 // TODO: Resize
 void UInventoryComponent::PrepareInventory() {
 	InventoryArray.SetNum(InvenNum);
+
+	for(int i = 0; i < InventoryArray.Num(); i++) {
+		if(InventoryArray[i].ItemStructure.ItemClass != nullptr) {
+			
+			// TODO: 通过类名初始化参数.
+			UClass* DefaultClass = InventoryArray[i].ItemStructure.ItemClass;
+			AItem* DefaultActor = Cast<AItem>(DefaultClass->GetDefaultObject());
+
+			if(DefaultActor) {
+				InventoryArray[i].ItemStructure = DefaultActor->GetItemStruct();
+			}
+		}
+	}
 }

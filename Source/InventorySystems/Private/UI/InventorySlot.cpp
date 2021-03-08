@@ -18,6 +18,9 @@ void UInventorySlot::NativeConstruct() {
 	ItemThumbnail->SetBrushFromTexture(SlotContents.ItemStructure.Thumbnail);
 
 	ItemQuantity->SetText(FText::AsNumber(SlotContents.Quantity));
+	if(SlotContents.Quantity<= 0) {
+		ItemQuantity->SetVisibility(ESlateVisibility::Hidden);
+	}
 }
 
 void UInventorySlot::SetSlotIndex(int32 Index) {

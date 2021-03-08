@@ -23,7 +23,7 @@ public:
 
 protected:
 	// Called when the game starts or when spawned
-	virtual void BeginPlay() override;
+virtual void BeginPlay() override;
 
 	UPROPERTY(Instanced, VisibleDefaultsOnly, Category="Component")
 	USphereComponent* SphereComp;
@@ -34,17 +34,21 @@ protected:
 	UPROPERTY(Instanced, EditInstanceOnly, BlueprintReadOnly, Meta=(ExposeOnSpawn = true))
 	UInventoryComponent* InventoryComp;
 
-	//UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Default")
 	UPROPERTY()
 	FItemStructure ItemStruct;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Default")
 	FSlotStructure SlotStruct;
 
+	virtual void OnInteracts(AActor* Interactor);
+	virtual void OnInteracts_Implementation(AActor* Interactor);
+
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
-	virtual void OnInteracts(AActor* Interactor);
-	virtual void OnInteracts_Implementation(AActor* Interactor);
+	UFUNCTION()
+	FItemStructure GetItemStruct() {
+		return ItemStruct;
+	}
 };

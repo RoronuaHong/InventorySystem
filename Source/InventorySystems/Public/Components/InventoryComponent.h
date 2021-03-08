@@ -39,8 +39,11 @@ protected:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Inventory")
 	FVector2D position;
 
-	UPROPERTY(EditInstanceOnly, BlueprintReadOnly, Meta = (ExposeOnSpawn = true))
+	UPROPERTY(Instanced, EditInstanceOnly, BlueprintReadOnly, Meta = (ExposeOnSpawn = true))
 	UInventoryComponent* InventoryComp;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Meta = (ExposeOnSpawn = true), Category = "Items")
+	TArray<FSlotStructure> InvenItem;
 
 	int32 InvenNum;
 
@@ -61,10 +64,10 @@ public:
 	}
 
 	UFUNCTION()
-	void SetNumberOfSlots(int32 NumbOfSlots);
+		void SetNumberOfSlots(int32 NumbOfSlots);
 
 	UFUNCTION()
-	TArray<FSlotStructure> GetInventoryArray() {
+		TArray<FSlotStructure> GetInventoryArray() {
 		return InventoryArray;
 	}
 

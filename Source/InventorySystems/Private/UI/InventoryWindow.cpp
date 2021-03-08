@@ -29,7 +29,6 @@ void UInventoryWindow::NativeConstruct() {
 	ButtonClose->OnReleased.AddUniqueDynamic(this, &UInventoryWindow::OnToggleClicked);
 
 	if(InventoryComp) {
-		UE_LOG(LogTemp, Log, TEXT("555: %i"), InventoryComp->GetNumberOfSlots());
 		int32 Num = InventoryComp->GetNumberOfSlots();
 
 		TArray<FSlotStructure> InvenArray = InventoryComp->GetInventoryArray();
@@ -52,7 +51,7 @@ void UInventoryWindow::NativeConstruct() {
 }
 
 FReply UInventoryWindow::NativeOnKeyDown(const FGeometry& InGeometry, const FKeyEvent& InKeyEvent) {
-	if(InKeyEvent.GetKey() == EKeys::Tab) {
+	if(InKeyEvent.GetKey() == EKeys::Tab || InKeyEvent.GetKey() == EKeys::E) {
 		HandleToggleInventory();
 
 		return FReply::Handled();

@@ -34,7 +34,6 @@ ABaseCharacter::ABaseCharacter()
 
 	FItemStructure ItemStructure;
 
-	// TODO: 结构体初始化和赋值问题.
 	FSlotStructure SlotStructure(ItemStructure, 0);
 
 	InvenArray.Init(SlotStructure, SlotNumber);

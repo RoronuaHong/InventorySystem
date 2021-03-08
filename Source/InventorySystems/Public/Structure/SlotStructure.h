@@ -11,9 +11,9 @@ struct FSlotStructure {
 
 	uint32 UniqueID;
 
-	FORCEINLINE FSlotStructure();
+	FSlotStructure(): ItemStructure(ItemStructure), Quantity(Quantity) {};
 
-	explicit FORCEINLINE FSlotStructure(FItemStructure ItemStructure, int32 Quantity);
+	FSlotStructure(FItemStructure ItemStructure, int32 Quantity): ItemStructure(ItemStructure), Quantity(Quantity) {};
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	FItemStructure ItemStructure;
@@ -30,22 +30,3 @@ struct FSlotStructure {
 		return UniqueID == Type.UniqueID;
 	}
 };
-
-// TODO: 序列化
-FORCEINLINE FSlotStructure::FSlotStructure() {
-	static uint32 ID = 0;
-
-	UniqueID = ID++;
-
-	this->ItemStructure = ItemStructure;
-	this->Quantity = Quantity;
-}
-
-FORCEINLINE FSlotStructure::FSlotStructure(FItemStructure ItemStructure, int32 Quantity) {
-	static uint32 ID = 0;
-
-	UniqueID = ID++;
-
-	this->ItemStructure = ItemStructure;
-	this->Quantity = Quantity;
-}
