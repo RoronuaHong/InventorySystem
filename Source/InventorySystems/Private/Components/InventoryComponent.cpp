@@ -73,6 +73,33 @@ void UInventoryComponent::SetInventoryArray(const TArray<FSlotStructure>& Array)
 void UInventoryComponent::ToggleInventory() {
 	UE_LOG(LogTemp, Log, TEXT("Name: %s"), *(InventoryComp->GetInventoryName()).ToString());
 
+	TArray<FSlotStructure> NewInvenArray = InventoryArray;
+
+	int32 InvenIndex = 0;
+
+	// TODO: 重新排序
+	for(int i = 0; i < NewInvenArray.Num(); i++) {
+		if(NewInvenArray[i].Quantity > 0) {
+			InventoryArray[InvenIndex] = NewInvenArray[i];
+
+			InvenIndex++;
+		}
+	}
+
+	for(int i = 0; i < NewInvenArray.Num(); i++) {
+		if(NewInvenArray[i].Quantity <= 0) {
+			InventoryArray[InvenIndex] = NewInvenArray[i];
+
+			InvenIndex++;
+		}
+	}
+
+	//SetInventoryArray(InventoryArray);
+
+	for(int i = 0; i < InventoryArray.Num(); i++) {
+		UE_LOG(LogTemp, Log, TEXT("111: %i"), InventoryArray[i].Quantity);
+	}
+
 	// FIXME: 打开方式不对
 	AMyPlayerController* MyPlayerController = Cast<AMyPlayerController>(UGameplayStatics::GetPlayerController(this, 0));
 
