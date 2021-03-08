@@ -51,4 +51,6 @@ public:
 	FItemStructure GetItemStruct() {
 		return ItemStruct;
 	}
+
+	virtual bool OnUseItem() PURE_VIRTUAL(AItem::OnUseItem, return false;);
 };

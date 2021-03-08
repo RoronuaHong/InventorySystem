@@ -7,9 +7,13 @@
 #include "Components/TextBlock.h"
 #include "Kismet/GameplayStatics.h"
 #include "Components/InventoryComponent.h"
+#include "Input/Reply.h"
+#include "Item.h"
+#include "Structure/SlotStructure.h"
+#include "Structure/ItemStructure.h"
 
 UInventorySlot::UInventorySlot(const FObjectInitializer& ObjectInitializer): Super(ObjectInitializer) {
-	
+
 }
 
 void UInventorySlot::NativeConstruct() {
@@ -18,9 +22,8 @@ void UInventorySlot::NativeConstruct() {
 	ItemThumbnail->SetBrushFromTexture(SlotContents.ItemStructure.Thumbnail);
 
 	ItemQuantity->SetText(FText::AsNumber(SlotContents.Quantity));
-	if(SlotContents.Quantity<= 0) {
-		ItemQuantity->SetVisibility(ESlateVisibility::Hidden);
-	}
+
+	SetItemNumHidden(SlotContents);
 }
 
 void UInventorySlot::SetSlotIndex(int32 Index) {
@@ -47,6 +50,53 @@ UInventoryComponent* UInventorySlot::GetInventoryComp() {
 	return InventoryComp;
 }
 
-void UInventorySlot::SetItemQuantity(UTextBlock* Quantity) {
+FReply UInventorySlot::NativeOnMouseButtonDown(const FGeometry& InGeometry, const FPointerEvent& InMouseEvent) {
+	if(InMouseEvent.IsMouseButtonDown(EKeys::RightMouseButton)) {
+		MyCharacter = Cast<ABaseCharacter>(UGameplayStatics::GetPlayerCharacter(this, 0));
 
+		if(InventoryComp == MyCharacter->InventoryComp) {
+			CurrentInvenArray = MyCharacter->InventoryComp->GetInventoryArray();
+			
+			if(CurrentInvenArray[SlotIndex].Quantity > 0) {
+				DefaultClass = SlotContents.ItemStructure.ItemClass;
+				DefaultActor = Cast<AItem>(DefaultClass->GetDefaultObject());
+
+				bool bConsumable = SlotContents.ItemStructure.bComsumable;
+				bool bUseItem = DefaultActor->OnUseItem();
+
+				if(bUseItem == bConsumable) {
+					DefaultActor->Destroy();
+
+					CurrentInvenArray[SlotIndex].Quantity = CurrentInvenArray[SlotIndex].Quantity - 1;
+				}
+
+				RefreshSlot();
+			}
+		}
+	}
+
+	return FReply::Handled();
+}
+
+void UInventorySlot::RefreshSlot() {
+	ItemQuantity->SetText(FText::AsNumber(CurrentInvenArray[SlotIndex].Quantity));
+
+	if(CurrentInvenArray[SlotIndex].Quantity <= 0) {
+		FItemStructure ItemStructure;
+		FSlotStructure SlotStructure(ItemStructure, 0);
+
+		CurrentInvenArray[SlotIndex] = SlotStructure;
+
+		ItemThumbnail->SetBrushFromTexture(CurrentInvenArray[SlotIndex].ItemStructure.Thumbnail);
+
+		SetItemNumHidden(CurrentInvenArray[SlotIndex]);
+	}
+
+	InventoryComp->SetInventoryArray(CurrentInvenArray);
+}
+
+void UInventorySlot::SetItemNumHidden(FSlotStructure SlotStruct) {
+	if(SlotStruct.Quantity <= 0) {
+		ItemQuantity->SetVisibility(ESlateVisibility::Hidden);
+	}
 }

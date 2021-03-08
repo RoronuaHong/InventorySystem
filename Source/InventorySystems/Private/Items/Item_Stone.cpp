@@ -25,3 +25,9 @@ AItem_Stone::AItem_Stone() {
 
 	SlotStruct = FSlotStructure(ItemStruct, 3);
 }
+
+bool AItem_Stone::OnUseItem() {
+	UE_LOG(LogTemp, Log, TEXT("Stone"));
+
+	return true;
+}

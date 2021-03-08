@@ -13,6 +13,9 @@ UCLASS()
 class INVENTORYSYSTEMS_API AItem_arbor : public AItem
 {
 	GENERATED_BODY()
-	
+
+public:
 	AItem_arbor();
+
+	bool OnUseItem() override;
 };

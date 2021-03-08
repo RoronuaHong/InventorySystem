@@ -28,28 +28,28 @@ struct FItemStructure {
 	}
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-		FText Name;
+	FText Name;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-		bool bStackable;
+	bool bStackable;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-		UTexture2D* Thumbnail;
+	UTexture2D* Thumbnail;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-		int32 MaxStackSize;
+	int32 MaxStackSize;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-		bool bComsumable;
+	bool bComsumable;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-		float Durability;
+	float Durability;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-		FText Description;
+	FText Description;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-		TSubclassOf<AActor> ItemClass;
+	TSubclassOf<AActor> ItemClass;
 };
 
 FORCEINLINE FItemStructure::FItemStructure(): Name(FText::FromString("None")), bStackable(false), Thumbnail(nullptr), MaxStackSize(4),

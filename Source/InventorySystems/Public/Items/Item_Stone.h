@@ -16,4 +16,6 @@ class INVENTORYSYSTEMS_API AItem_Stone : public AItem
 	
 public:
 	AItem_Stone();
+
+	bool OnUseItem() override;
 };

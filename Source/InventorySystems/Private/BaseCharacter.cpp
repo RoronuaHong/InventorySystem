@@ -70,8 +70,6 @@ void ABaseCharacter::OnInteract() {
 }
 
 void ABaseCharacter::OnInventory() {
-	UE_LOG(LogTemp, Log, TEXT("Inventory: %s"), *GetNameSafe(InventoryComp));
-
 	if(InventoryComp) {
 		InventoryComp->ToggleInventory();
 	}

@@ -7,8 +7,11 @@
 #include "Structure/SlotStructure.h"
 #include "InventorySlot.generated.h"
 
+class AItem;
+class UClass;
 class UImage;
 class UTextBlock;
+class ABaseCharacter;
 class UInventoryComponent;
 
 UCLASS()
@@ -36,6 +39,14 @@ protected:
 	UPROPERTY(Meta=(BindWidget))
 	UTextBlock* ItemQuantity;
 
+	TArray<FSlotStructure> CurrentInvenArray;
+
+	UClass* DefaultClass;
+
+	AItem* DefaultActor;
+
+	ABaseCharacter* MyCharacter;
+
 public:
 	UFUNCTION()
 	void SetSlotIndex(int32 Index);
@@ -52,8 +63,14 @@ public:
 	UFUNCTION()
 	void SetInventoryComp(UInventoryComponent* InvenComp);
 
-	UInventoryComponent* GetInventoryComp();
+	UFUNCTION()
+	void RefreshSlot();
 
 	UFUNCTION()
-	void SetItemQuantity(UTextBlock* Quantity);
+	void SetItemNumHidden(FSlotStructure SlotStruct);
+
+	UFUNCTION()
+	UInventoryComponent* GetInventoryComp();
+
+	virtual FReply NativeOnMouseButtonDown(const FGeometry& InGeometry, const FPointerEvent& InMouseEvent);
 };

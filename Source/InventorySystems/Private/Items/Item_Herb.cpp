@@ -26,3 +26,9 @@ AItem_Herb::AItem_Herb() {
 	SlotStruct = FSlotStructure(ItemStruct, 3);
 }
 
+bool AItem_Herb::OnUseItem() {
+	UE_LOG(LogTemp, Log, TEXT("heal"));
+
+	return true;
+}
+

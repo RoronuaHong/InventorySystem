@@ -35,7 +35,6 @@ void AItem::BeginPlay()
 void AItem::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-
 }
 
 void AItem::OnInteracts(AActor* Interactor) {

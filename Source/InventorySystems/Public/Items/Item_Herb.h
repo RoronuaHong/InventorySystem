@@ -14,4 +14,6 @@ class INVENTORYSYSTEMS_API AItem_Herb : public AItem
 	
 public:
 	AItem_Herb();
+
+	bool OnUseItem() override;
 };

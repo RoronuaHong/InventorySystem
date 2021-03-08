@@ -71,7 +71,7 @@ void UInventoryComponent::SetInventoryArray(const TArray<FSlotStructure>& Array)
 }
 
 void UInventoryComponent::ToggleInventory() {
-	UE_LOG(LogTemp, Log, TEXT("888: %s"), *(InventoryComp->GetInventoryName()).ToString());
+	UE_LOG(LogTemp, Log, TEXT("Name: %s"), *(InventoryComp->GetInventoryName()).ToString());
 
 	// FIXME: 打开方式不对
 	AMyPlayerController* MyPlayerController = Cast<AMyPlayerController>(UGameplayStatics::GetPlayerController(this, 0));
@@ -103,6 +103,8 @@ void UInventoryComponent::ToggleInventory() {
 					CurrentPanelSlot->SetAnchors(FAnchors(0.5, 0.5, 0.5, 0.5));
 
 					UWidgetBlueprintLibrary::SetInputMode_UIOnly(MyPlayerController, InventoryWindowHUD, true);
+
+					MyPlayerController->bShowMouseCursor = true;
 				}
 			}
 		}

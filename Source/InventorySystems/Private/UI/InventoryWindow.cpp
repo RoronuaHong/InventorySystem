@@ -17,10 +17,6 @@ UInventoryWindow::UInventoryWindow(const FObjectInitializer& ObjectInitializer) 
 
 void UInventoryWindow::NativeTick(const FGeometry& MyGeometry, float DeltaTime) {
 	APlayerController* MyPlayerController = Cast<APlayerController>(UGameplayStatics::GetPlayerController(this, 0));
-
-	if(!HasUserFocus(MyPlayerController)) {
-		SetUserFocus(MyPlayerController);
-	}
 }
 
 void UInventoryWindow::NativeConstruct() {
@@ -30,7 +26,6 @@ void UInventoryWindow::NativeConstruct() {
 
 	if(InventoryComp) {
 		int32 Num = InventoryComp->GetNumberOfSlots();
-
 		TArray<FSlotStructure> InvenArray = InventoryComp->GetInventoryArray();
 
 		for(int i = 0; i < Num; i++) {
@@ -53,8 +48,6 @@ void UInventoryWindow::NativeConstruct() {
 FReply UInventoryWindow::NativeOnKeyDown(const FGeometry& InGeometry, const FKeyEvent& InKeyEvent) {
 	if(InKeyEvent.GetKey() == EKeys::Tab || InKeyEvent.GetKey() == EKeys::E) {
 		HandleToggleInventory();
-
-		return FReply::Handled();
 	}
 
 	return FReply::Handled();
