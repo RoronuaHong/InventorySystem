@@ -74,7 +74,6 @@ void UInventoryComponent::ToggleInventory() {
 	UE_LOG(LogTemp, Log, TEXT("Name: %s"), *(InventoryComp->GetInventoryName()).ToString());
 
 	TArray<FSlotStructure> NewInvenArray = InventoryArray;
-
 	int32 InvenIndex = 0;
 
 	// TODO: 重新排序
@@ -92,12 +91,6 @@ void UInventoryComponent::ToggleInventory() {
 
 			InvenIndex++;
 		}
-	}
-
-	//SetInventoryArray(InventoryArray);
-
-	for(int i = 0; i < InventoryArray.Num(); i++) {
-		UE_LOG(LogTemp, Log, TEXT("111: %i"), InventoryArray[i].Quantity);
 	}
 
 	// FIXME: 打开方式不对
@@ -140,6 +133,8 @@ void UInventoryComponent::ToggleInventory() {
 		InventoryWindowHUD = nullptr;
 
 		UWidgetBlueprintLibrary::SetInputMode_GameOnly(MyPlayerController);
+
+		MyPlayerController->bShowMouseCursor = false;
 	}
 }
 
@@ -224,7 +219,7 @@ void UInventoryComponent::PrepareInventory() {
 	for(int i = 0; i < InventoryArray.Num(); i++) {
 		if(InventoryArray[i].ItemStructure.ItemClass != nullptr) {
 			
-			// TODO: 通过类名初始化参数.
+			// TODO: 通过类名初始化参数
 			UClass* DefaultClass = InventoryArray[i].ItemStructure.ItemClass;
 			AItem* DefaultActor = Cast<AItem>(DefaultClass->GetDefaultObject());
 

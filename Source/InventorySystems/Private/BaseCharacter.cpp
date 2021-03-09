@@ -21,7 +21,7 @@ ABaseCharacter::ABaseCharacter()
 	CameraComp = CreateDefaultSubobject<UCameraComponent>(TEXT("CameraComp"));
 	SpringArmComp = CreateDefaultSubobject<USpringArmComponent>(TEXT("SpringArmComp"));
 
-	// FIXME: 修改代码时需要重新配置并重启引擎.
+	// FIXME: 修改代码时需要重新配置并重启引擎
 	InventoryComp = CreateDefaultSubobject<UInventoryComponent>(TEXT("InventoryComp"));
 
 	SpringArmComp->bUsePawnControlRotation = true;

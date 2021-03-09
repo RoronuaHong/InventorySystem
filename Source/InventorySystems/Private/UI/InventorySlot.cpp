@@ -70,7 +70,20 @@ FReply UInventorySlot::NativeOnMouseButtonDown(const FGeometry& InGeometry, cons
 					CurrentInvenArray[SlotIndex].Quantity = CurrentInvenArray[SlotIndex].Quantity - 1;
 				}
 
-				RefreshSlot();
+				ItemQuantity->SetText(FText::AsNumber(CurrentInvenArray[SlotIndex].Quantity));
+
+				if(CurrentInvenArray[SlotIndex].Quantity <= 0) {
+					RefreshSlot();
+				}
+			}
+		} else {
+			CurrentInvenArray = InventoryComp->GetInventoryArray();
+
+			if(CurrentInvenArray[SlotIndex].Quantity > 0) {
+				// FIXME: 一次性全部获取
+				if(MyCharacter->InventoryComp->AddToInventory(CurrentInvenArray[SlotIndex])) {
+					RefreshSlot();
+				}
 			}
 		}
 	}
@@ -79,18 +92,14 @@ FReply UInventorySlot::NativeOnMouseButtonDown(const FGeometry& InGeometry, cons
 }
 
 void UInventorySlot::RefreshSlot() {
-	ItemQuantity->SetText(FText::AsNumber(CurrentInvenArray[SlotIndex].Quantity));
+	FItemStructure ItemStructure;
+	FSlotStructure SlotStructure(ItemStructure, 0);
 
-	if(CurrentInvenArray[SlotIndex].Quantity <= 0) {
-		FItemStructure ItemStructure;
-		FSlotStructure SlotStructure(ItemStructure, 0);
+	CurrentInvenArray[SlotIndex] = SlotStructure;
 
-		CurrentInvenArray[SlotIndex] = SlotStructure;
+	ItemThumbnail->SetBrushFromTexture(CurrentInvenArray[SlotIndex].ItemStructure.Thumbnail);
 
-		ItemThumbnail->SetBrushFromTexture(CurrentInvenArray[SlotIndex].ItemStructure.Thumbnail);
-
-		SetItemNumHidden(CurrentInvenArray[SlotIndex]);
-	}
+	SetItemNumHidden(CurrentInvenArray[SlotIndex]);
 
 	InventoryComp->SetInventoryArray(CurrentInvenArray);
 }

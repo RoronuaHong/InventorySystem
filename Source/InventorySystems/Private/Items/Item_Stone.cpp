@@ -16,7 +16,7 @@ AItem_Stone::AItem_Stone() {
 		FText::FromString("Stone"),
 		true,
 		Thumbnail,
-		4,
+		10,
 		true,
 		0,
 		FText::FromString("None"),
