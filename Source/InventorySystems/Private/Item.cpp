@@ -48,6 +48,8 @@ void AItem::OnInteracts(AActor* Interactor) {
 void AItem::OnInteracts_Implementation(AActor* Interactor) {
 	auto InvenComp = static_cast<UInventoryComponent*>((Interactor->GetComponentByClass(UInventoryComponent::StaticClass())));
 
+	UE_LOG(LogTemp, Log, TEXT("333"));
+
 	if(InvenComp->AddToInventory(SlotStruct)) {
 		Destroy();
 	}

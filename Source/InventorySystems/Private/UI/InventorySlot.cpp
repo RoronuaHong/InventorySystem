@@ -86,6 +86,8 @@ FReply UInventorySlot::NativeOnMouseButtonDown(const FGeometry& InGeometry, cons
 				}
 			}
 		}
+
+		InventoryComp->SetInventoryArray(CurrentInvenArray);
 	}
 
 	return FReply::Handled();
@@ -100,8 +102,6 @@ void UInventorySlot::RefreshSlot() {
 	ItemThumbnail->SetBrushFromTexture(CurrentInvenArray[SlotIndex].ItemStructure.Thumbnail);
 
 	SetItemNumHidden(CurrentInvenArray[SlotIndex]);
-
-	InventoryComp->SetInventoryArray(CurrentInvenArray);
 }
 
 void UInventorySlot::SetItemNumHidden(FSlotStructure SlotStruct) {
