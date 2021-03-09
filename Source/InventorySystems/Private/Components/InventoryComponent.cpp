@@ -85,6 +85,8 @@ void UInventoryComponent::ToggleInventory() {
 		}
 	}
 
+	Index = InvenIndex;
+
 	for(int i = 0; i < NewInvenArray.Num(); i++) {
 		if(NewInvenArray[i].Quantity <= 0) {
 			InventoryArray[InvenIndex] = NewInvenArray[i];
@@ -228,4 +230,19 @@ void UInventoryComponent::PrepareInventory() {
 			}
 		}
 	}
+}
+
+bool UInventoryComponent::OnInventoryQuery(TSubclassOf<AActor> QueryItemClass, int32 QueryAmount) {
+	bool BoolInven = false;
+
+	for(FSlotStructure InItem : InventoryArray) {
+		if(InItem.ItemStructure.ItemClass == QueryItemClass && InItem.Quantity >= QueryAmount) {
+			BoolInven = true;
+
+			break;
+		}
+	}
+
+
+	return BoolInven;
 }

@@ -9,6 +9,7 @@
 #include "Item.h"
 #include "Structure/ItemStructure.h"
 #include "Structure/SlotStructure.h"
+#include "Items/Item_Herb.h"
 
 // Sets default values
 ABaseCharacter::ABaseCharacter()
@@ -16,7 +17,7 @@ ABaseCharacter::ABaseCharacter()
  	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 
-	SlotNumber = 5;
+	SlotNumber = 3;
 
 	CameraComp = CreateDefaultSubobject<UCameraComponent>(TEXT("CameraComp"));
 	SpringArmComp = CreateDefaultSubobject<USpringArmComponent>(TEXT("SpringArmComp"));
@@ -75,6 +76,16 @@ void ABaseCharacter::OnInventory() {
 	}
 }
 
+void ABaseCharacter::OnQuery() {
+	if(InventoryComp) {
+		if(InventoryComp->OnInventoryQuery(AItem_Herb::StaticClass(), 3)) {
+			UE_LOG(LogTemp, Log, TEXT("Is in"));
+		} else {
+			UE_LOG(LogTemp, Log, TEXT("Is not in"));
+		}
+	}
+}
+
 // Called when the game starts or when spawned
 void ABaseCharacter::BeginPlay()
 {
@@ -103,4 +114,5 @@ void ABaseCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCompo
 
 	PlayerInputComponent->BindAction("Interact", IE_Pressed, this, &ABaseCharacter::OnInteract);
 	PlayerInputComponent->BindAction("Inventory", IE_Pressed, this, &ABaseCharacter::OnInventory);
+	PlayerInputComponent->BindAction("Query", IE_Pressed, this, &ABaseCharacter::OnQuery);
 }

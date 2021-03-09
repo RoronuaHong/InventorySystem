@@ -7,6 +7,7 @@
 #include "Components/ActorComponent.h"
 #include "InventoryComponent.generated.h"
 
+class AActor;
 class UInventoryWindow;
 
 UCLASS(ClassGroup = (Custom), meta = (BlueprintSpawnableComponent))
@@ -64,10 +65,10 @@ public:
 	}
 
 	UFUNCTION()
-		void SetNumberOfSlots(int32 NumbOfSlots);
+	void SetNumberOfSlots(int32 NumbOfSlots);
 
 	UFUNCTION()
-		TArray<FSlotStructure> GetInventoryArray() {
+	TArray<FSlotStructure> GetInventoryArray() {
 		return InventoryArray;
 	}
 
@@ -82,6 +83,9 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 	void PrepareInventory();
+
+	UFUNCTION(BlueprintCallable)
+	bool OnInventoryQuery(TSubclassOf<AActor> QueryItemClass, int32 QueryAmount);
 
 	bool CreateStack(FSlotStructure SlotCont);
 	bool AddToStack(FSlotStructure SlotStruct, int32 SlotIndex);

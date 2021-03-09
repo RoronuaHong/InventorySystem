@@ -28,6 +28,7 @@ protected:
 	void MoveRight(float Value);
 	void OnInteract();
 	void OnInventory();
+	void OnQuery();
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
 	UCameraComponent* CameraComp;

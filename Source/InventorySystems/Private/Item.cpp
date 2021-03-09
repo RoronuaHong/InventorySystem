@@ -48,8 +48,7 @@ void AItem::OnInteracts(AActor* Interactor) {
 void AItem::OnInteracts_Implementation(AActor* Interactor) {
 	auto InvenComp = static_cast<UInventoryComponent*>((Interactor->GetComponentByClass(UInventoryComponent::StaticClass())));
 
-	UE_LOG(LogTemp, Log, TEXT("333"));
-
+	// FIXME: 由蓝图继承来的SlotStruct无法显示.
 	if(InvenComp->AddToInventory(SlotStruct)) {
 		Destroy();
 	}
