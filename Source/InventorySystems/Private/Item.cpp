@@ -87,15 +87,21 @@ void AItem::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* OtherAct
 }
 
 void AItem::OnOverlapEnd(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex) {
-	ItemInfoHUD->RemoveFromParent();
-
-	ItemInfoHUD = nullptr;
+	if(ItemInfoHUD) {
+		ItemInfoHUD->RemoveFromParent();
+		ItemInfoHUD = nullptr;
+	}
 }
 
 void AItem::OnInteracts(AActor* Interactor) {
 	auto InvenComp = static_cast<UInventoryComponent*>((Interactor->GetComponentByClass(UInventoryComponent::StaticClass())));
 
 	if(InvenComp->AddToInventory(SlotStruct)) {
+		if(ItemInfoHUD) {
+			ItemInfoHUD->RemoveFromParent();
+			ItemInfoHUD = nullptr;
+		}
+
 		Destroy();
 	}
 }
@@ -105,6 +111,11 @@ void AItem::OnInteracts_Implementation(AActor* Interactor) {
 
 	// FIXME: 由蓝图继承来的SlotStruct无法显示.
 	if(InvenComp->AddToInventory(SlotStruct)) {
+		if(ItemInfoHUD) {
+			ItemInfoHUD->RemoveFromParent();
+			ItemInfoHUD = nullptr;
+		}
+
 		Destroy();
 	}
 }
