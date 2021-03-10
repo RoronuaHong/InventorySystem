@@ -56,7 +56,7 @@ FReply UInventorySlot::NativeOnMouseButtonDown(const FGeometry& InGeometry, cons
 
 		if(InventoryComp == MyCharacter->InventoryComp) {
 			CurrentInvenArray = MyCharacter->InventoryComp->GetInventoryArray();
-			
+
 			if(CurrentInvenArray[SlotIndex].Quantity > 0) {
 				DefaultClass = SlotContents.ItemStructure.ItemClass;
 				DefaultActor = Cast<AItem>(DefaultClass->GetDefaultObject());

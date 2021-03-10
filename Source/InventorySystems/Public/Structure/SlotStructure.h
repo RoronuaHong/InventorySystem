@@ -16,10 +16,10 @@ struct FSlotStructure {
 	explicit FORCEINLINE FSlotStructure(FItemStructure ItemStructure, int32 Quantity);
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-		FItemStructure ItemStructure;
+	FItemStructure ItemStructure;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-		int32 Quantity;
+	int32 Quantity;
 
 	FSlotStructure(const FSlotStructure& SlotStruct)//复制构造函数
 	{
